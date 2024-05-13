@@ -14,14 +14,14 @@ const hostname = 'localhost'
 
 app.get('/', (req, res) => {
   // Test Absolute import mapOrder
-
+  console.log('hello word')
   res.end('<h1>Hello World!</h1><hr>')
 })
 
 cron.schedule('*/2 * * * *', async () => {
   try {
     // Gửi request lên API
-    const response = await axios.get('http://localhost:4000')
+    const response = await axios.get('https://trello-api-23wj.onrender.com/')
 
     // Xử lý dữ liệu trả về nếu cần
     console.log(response.data)
