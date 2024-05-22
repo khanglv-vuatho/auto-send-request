@@ -1,12 +1,8 @@
-/**
- * Updated by trungquandev.com's author on August 17 2023
- * YouTube: https://youtube.com/@trungquandev
- * "A bit of fragrance clings to the hand that gives flowers!"
- */
 import cron from 'node-cron'
 import express from 'express'
 import axios from 'axios'
 import { env } from './config/environment'
+import multer from 'multer'
 
 const app = express()
 
@@ -16,6 +12,24 @@ app.get('/', (req, res) => {
   // Test Absolute import mapOrder
   console.log('hello word')
   res.end('<h1>Hello World!</h1><hr>')
+})
+
+const upload = multer()
+
+app.post('/', upload.array('files'), async (req, res) => {
+  console.log(req.files)
+
+  if (req.files.length > 0) {
+    req.files.map(async (item) => {
+      const response = await axios.put(`https://blog-english.khangluong2002.workers.dev/${item.originalname}`, item.buffer, {
+        header: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+    })
+  }
+
+  res.send({ message: '123' })
 })
 
 cron.schedule('*/2 * * * *', async () => {
