@@ -17,8 +17,6 @@ app.get('/', (req, res) => {
 const upload = multer()
 
 app.post('/', upload.array('files'), async (req, res) => {
-  console.log(req.files)
-
   if (req.files.length > 0) {
     req.files.map(async (item) => {
       const response = await axios.put(`https://blog-english.khangluong2002.workers.dev/${item.originalname}`, item.buffer, {
@@ -32,17 +30,17 @@ app.post('/', upload.array('files'), async (req, res) => {
   res.send({ message: '123' })
 })
 
-cron.schedule('*/2 * * * *', async () => {
-  try {
-    // Gửi request lên API
-    const response = await axios.get('https://trello-api-23wj.onrender.com/')
+// cron.schedule('*/2 * * * *', async () => {
+//   try {
+//     // Gửi request lên API
+//     const response = await axios.get('https://trello-api-23wj.onrender.com/')
 
-    // Xử lý dữ liệu trả về nếu cần
-    console.log(response.data)
-  } catch (error) {
-    console.error('Error sending request:', error)
-  }
-})
+//     // Xử lý dữ liệu trả về nếu cần
+//     console.log(response.data)
+//   } catch (error) {
+//     console.error('Error sending request:', error)
+//   }
+// })
 if (env.BUILD_MODE === 'production') {
   app.listen(process.env.PORT, () => {
     console.log(`Hello World, I am running at PORT : ${process.env.PORT}`)
