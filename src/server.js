@@ -34,7 +34,7 @@ cron.schedule('*/10 * * * *', async () => {
   try {
     // Gửi request lên API
     const response = await axios.get('https://api.trisielts.online/v1/tags')
-
+    await axios.get('https://trello-api-m0q8.onrender.com')
     // Xử lý dữ liệu trả về nếu cần
     console.log(response.data)
   } catch (error) {
